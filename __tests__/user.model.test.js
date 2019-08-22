@@ -8,7 +8,7 @@ mongoose.connection.on('error', () => {
 
 describe('initial test', ()=> {
     it('runs successfully', ()=>{
-        expect(true).toEqual(true)
+        expect(true).toEqual(false)
     })
 })
 
