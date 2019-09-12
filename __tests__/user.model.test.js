@@ -25,6 +25,15 @@ describe("User Model", () => {
             throw new Error(err);
         }
     })
+    it("should throw an error on save if two users use the same email", async () => {
+        try {
+            await new User({ username: "sam", email: "sam@ed.info"}).save();
+            await new User({ username: "tom", email: "sam@ed.info"}).save();
+        }
+        catch (err) {
+            expect(err.code).toEqual(11000);
+        }
+    })
 })
 afterEach(async () => {
     try {
