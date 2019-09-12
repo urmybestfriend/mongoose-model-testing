@@ -43,6 +43,14 @@ describe("User Model", () => {
             expect(err.code).toEqual(11000);
         }
     })
+    it("should throw an error if the email is invalid ", async () => {
+        try {
+            await new User({ username: "john", email: "johnsmith.info"}).save();
+        }
+        catch (err) {
+            expect(err.errors.email.message).toEqual("Please give a valid email address");
+        }
+    })
 })
 afterEach(async () => {
     try {
