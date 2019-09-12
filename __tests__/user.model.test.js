@@ -26,7 +26,14 @@ describe("User Model", () => {
         }
     })
 })
-
+afterEach(async () => {
+    try {
+        await User.deleteMany({});
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
 afterAll(async () => {
     try {
         await mongoose.connection.close();
