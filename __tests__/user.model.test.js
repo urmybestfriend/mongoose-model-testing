@@ -38,7 +38,6 @@ describe("User Model", () => {
     } catch (err) {
       expect(err.errors.username.kind).toEqual("required")
     }
-
   })
   it("should throw an error on save if two users use the same email", async () => {
     try {
