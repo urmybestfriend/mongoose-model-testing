@@ -25,6 +25,15 @@ describe("User Model", () => {
             throw new Error(err);
         }
     })
+    it("should throw an error if username field is empty ", async () => {
+        try {
+            await new User({ username: "", email: "john@smith.info"}).save();
+        }
+        catch (err) {
+            expect(err.errors.username.kind).toEqual("required");
+        }
+
+    })
     it("should throw an error on save if two users use the same email", async () => {
         try {
             await new User({ username: "sam", email: "sam@ed.info"}).save();
