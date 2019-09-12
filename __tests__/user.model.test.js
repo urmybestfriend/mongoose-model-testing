@@ -8,11 +8,22 @@ mongoose.connection.on('error', () => {
 })
 
 describe("User Model", () => {
-    it("has username and email attributes", async () => {
+    it("has username and email attributes", () => {
         let expectedKeys = ["username", "email"]
         let keys = Object.keys(User.schema.paths)
         let userAttributes = [keys[0], keys[1]]
         expect(userAttributes).toStrictEqual(expectedKeys)
+    })
+    it("should create a new user ", async () => {
+        try {
+            const user = new User({username: "john", email: "john@smith.info"});
+            let result = await user.save();
+            expect(result.username).toEqual(user.username);
+            expect(result.email).toEqual(user.email);
+        }
+        catch (err) {
+            throw new Error(err);
+        }
     })
 })
 
