@@ -1,7 +1,7 @@
 const User = require('./../user.model.js')
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
-dbtype = process.env.dbtype ? 'mongo' : 'localhost'
+const dbtype = process.env.dbtype ? 'mongo' : 'localhost'
 mongoose.connect('mongodb://' + dbtype + '/testUser', {
   useNewUrlParser: true
 })
@@ -53,7 +53,7 @@ describe("User Model", () => {
       expect(err.code).toEqual(11000)
     }
   })
-  it("should throw an error if the email is invalid ", async () => {
+  it("should throw an error if the email is invalid", async () => {
     try {
       await new User({
         username: "john",
