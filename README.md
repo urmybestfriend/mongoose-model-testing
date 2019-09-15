@@ -1,4 +1,4 @@
-## Mongoose User Model Testing
+## Mongoose User Model Testing with Jest
 
 #### Set up and run the code:
 1. Run ``npm install``
