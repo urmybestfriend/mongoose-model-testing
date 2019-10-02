@@ -66,7 +66,7 @@ describe("User Model", () => {
 })
 
 describe("User Password Authentication", () => {
-  it("the same password should generate the same hash.", async () => {
+  it("should generate the same hash given the same password text and salt", async () => {
     try {
         let salt = User.generateSalt()
         let hash = User.generateHash("qwer213", salt)
