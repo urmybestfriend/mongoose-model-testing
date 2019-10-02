@@ -11,16 +11,17 @@ mongoose.connection.on('error', () => {
 
 describe("User Model", () => {
   it("has username and email attributes", () => {
-    let expectedKeys = ["username", "email"]
+    let expectedKeys = ["username", "email", "hashed_password", "salt"]
     let keys = Object.keys(User.schema.paths)
-    let userAttributes = [keys[0], keys[1]]
+    let userAttributes = [keys[0], keys[1], keys[2], keys[3]]
     expect(userAttributes).toStrictEqual(expectedKeys)
   })
   it("should create a new user", async () => {
     try {
       const user = new User({
         username: "john",
-        email: "john@smith.info"
+        email: "john@smith.info",
+        password: "qwer213"
       })
       let result = await user.save()
       expect(result.username).toEqual(user.username)
@@ -33,7 +34,8 @@ describe("User Model", () => {
     try {
       await new User({
         username: "",
-        email: "john@smith.info"
+        email: "john@smith.info",
+        password: "qwer213"
       }).save()
     } catch (err) {
       expect(err.errors.username.kind).toEqual("required")
@@ -43,11 +45,13 @@ describe("User Model", () => {
     try {
       await new User({
         username: "sam",
-        email: "sam@ed.info"
+        email: "sam@ed.info",
+        password: "qwer213"
       }).save()
       await new User({
         username: "tom",
-        email: "sam@ed.info"
+        email: "sam@ed.info",
+        password: "qzxc213"
       }).save()
     } catch (err) {
       expect(err.code).toEqual(11000)
@@ -57,7 +61,8 @@ describe("User Model", () => {
     try {
       await new User({
         username: "john",
-        email: "johnsmith.info"
+        email: "johnsmith.info",
+        password: "qwer213"
       }).save()
     } catch (err) {
       expect(err.errors.email.message).toEqual("Please give a valid email address")
@@ -74,6 +79,15 @@ describe("User Password Authentication", () => {
     }
     catch (err) {
       throw new Error(err)
+    }
+  })
+  it("should save a user with hashed_password and salt attributes", async () => {
+    try {
+        let result = await new User({ username: "sam", email: "sam@ed.info", password: 'qwer213'}).save()
+        expect(Object.keys(result._doc)).toEqual(expect.arrayContaining( ['salt', 'hashed_password']))
+    }
+    catch (err) {
+        throw new Error(err);
     }
   })
 })

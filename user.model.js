@@ -10,8 +10,24 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: 'email already exists',
     match: [/.+\@.+\..+/, 'Please give a valid email address']
-  }
+  },
+  hashed_password: {
+    type: String,
+    required: true
+  },
+  salt: String
 })
+
+UserSchema
+  .virtual('password')
+  .set(function(password) {
+    this._password = password
+    this.salt = this.model('User').generateSalt()
+    this.hashed_password = this.model('User').generateHash(password, this.salt)
+  })
+  .get(function() {
+    return this._password
+  })
 
 UserSchema.statics.generateSalt = function(){
   return Math.round((new Date().valueOf() * Math.random())) + ''
