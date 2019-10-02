@@ -87,7 +87,29 @@ describe("User Password Authentication", () => {
         expect(Object.keys(result._doc)).toEqual(expect.arrayContaining( ['salt', 'hashed_password']))
     }
     catch (err) {
-        throw new Error(err);
+        throw new Error(err)
+    }
+  })
+  it("should throw an error if the password value is empty", async () => {
+    try {
+      await new User({
+        username: "sam",
+        email: "sam@ed.info",
+        password: ""
+      }).save()
+    } catch (err) {
+      expect(err.errors.password.message).toEqual("Password is required")
+    }
+  })
+  it("should throw an error if password length is less than 6", async () => {
+    try {
+      await new User({
+        username: "sam",
+        email: "sam@ed.info",
+        password: "123"
+      }).save()
+    } catch (err) {
+      expect(err.errors.password.message).toEqual("Password must be at least 6 characters.")
     }
   })
 })
