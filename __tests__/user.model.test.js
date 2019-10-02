@@ -69,8 +69,8 @@ describe("User Password Authentication", () => {
   it("the same password should generate the same hash.", async () => {
     try {
         let salt = User.generateSalt()
-        let hash = User.generateHash("qwer213", salt);
-        expect(hash).toEqual(User.generateHash("qwer213", salt));
+        let hash = User.generateHash("qwer213", salt)
+        expect(hash).toEqual(User.generateHash("qwer213", salt))
     }
     catch (err) {
       throw new Error(err)
