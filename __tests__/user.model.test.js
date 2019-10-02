@@ -112,6 +112,34 @@ describe("User Password Authentication", () => {
       expect(err.errors.password.message).toEqual("Password must be at least 6 characters.")
     }
   })
+  it("should throw an error if authentication is given a wrong password", async () => {
+    try {
+      await new User({ username: "sam", email: "sam@ed.info", password: 'qwer213'}).save()
+        
+      let result = await User.findOne({ email: "sam@ed.info" })
+
+      let wrongPassword = "123456"
+      let auth = User.authenticate(wrongPassword, result.hashed_password, result.salt)
+      expect(auth).toEqual(false)
+    }
+    catch (err) {
+      throw new Error(err)
+    }
+  })
+  it("should authenticate suucessfully if given correct password", async () => {
+    try {
+      await new User({ username: "sam", email: "sam@ed.info", password: 'qwer213'}).save()
+        
+      let result = await User.findOne({ email: "sam@ed.info" })
+
+      let wrongPassword = "qwer213"
+      let auth = User.authenticate(wrongPassword, result.hashed_password, result.salt)
+      expect(auth).toEqual(true)
+    }
+    catch (err) {
+      throw new Error(err)
+    }
+  })
 })
 
 afterEach(async () => {

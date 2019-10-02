@@ -52,4 +52,8 @@ UserSchema.statics.generateHash = function(password, salt) {
   }
 }
 
+UserSchema.statics.authenticate = function(given_password, hashed_password, salt) {
+  return UserSchema.statics.generateHash(given_password, salt) === hashed_password
+}
+
 module.exports = mongoose.model('User', UserSchema)
