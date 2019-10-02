@@ -63,19 +63,33 @@ describe("User Model", () => {
       expect(err.errors.email.message).toEqual("Please give a valid email address")
     }
   })
-  afterEach(async () => {
+})
+
+describe("User Password Authentication", () => {
+  it("the same password should generate the same hash.", async () => {
     try {
-      await User.deleteMany({})
-    } catch (err) {
-      console.log(err)
+        let salt = User.generateSalt()
+        let hash = User.generateHash("qwer213", salt);
+        expect(hash).toEqual(User.generateHash("qwer213", salt));
+    }
+    catch (err) {
+      throw new Error(err)
     }
   })
-  afterAll(async () => {
-    try {
-      await mongoose.connection.close()
-    } catch (err) {
-      console.log(err)
-    }
-  })
+})
+
+afterEach(async () => {
+  try {
+    await User.deleteMany({})
+  } catch (err) {
+    console.log(err)
+  }
+})
+afterAll(async () => {
+  try {
+    await mongoose.connection.close()
+  } catch (err) {
+    console.log(err)
+  }
 })
 
