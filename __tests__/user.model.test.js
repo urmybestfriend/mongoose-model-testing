@@ -126,7 +126,7 @@ describe("User Password Authentication", () => {
       throw new Error(err)
     }
   })
-  it("should authenticate suucessfully if given correct password", async () => {
+  it("should authenticate successfully if given correct password", async () => {
     try {
       await new User({ username: "sam", email: "sam@ed.info", password: 'qwer213'}).save()
         
