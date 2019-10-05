@@ -71,7 +71,7 @@ describe("User Model", () => {
 })
 
 describe("User Password Authentication", () => {
-  it("should generate the same hash given the same password text and salt", async () => {
+  it("should generate the same hash given the same password text and salt", () => {
     try {
         let salt = User.generateSalt()
         let hash = User.generateHash("qwer213", salt)
@@ -132,8 +132,8 @@ describe("User Password Authentication", () => {
         
       let result = await User.findOne({ email: "sam@ed.info" })
 
-      let wrongPassword = "qwer213"
-      let auth = User.authenticate(wrongPassword, result.hashed_password, result.salt)
+      let rightPassword = "qwer213"
+      let auth = User.authenticate(rightPassword, result.hashed_password, result.salt)
       expect(auth).toEqual(true)
     }
     catch (err) {
