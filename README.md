@@ -1,6 +1,6 @@
 ## Mongoose User Model Testing with Jest
 
-User model with username, email and password authentication. 
+User model with username, email, and password authentication. 
 
 #### Set up and run the code:
 1. Run ``npm install``
