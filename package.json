@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/shamahoque/mongoose-user-model-testing#readme",
   "dependencies": {
-    "mongoose": "^5.6.10"
+    "mongoose": "^5.7.5"
   },
   "devDependencies": {
     "jest": "^24.9.0"
